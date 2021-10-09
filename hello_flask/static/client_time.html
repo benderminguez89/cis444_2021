@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
+		<style>
+			body {
+  				background-image: ;
+  				background-repeat: no-repeat;
+ 				background-attachment: fixed;
+  				background-size: 100% 90%;
+			}
+			h1 {color:white;}
+			h2 {color:orange;}
+		</style>
+		
         <!-- head definitions go here -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     </head>
     <body>
 	    <h1 id="mytime"></h1>
+		<h2 id="death"></h2>
 	<script>
+
 		setInterval( function(){ $('#mytime').html( "Time is " + new Date());}, 500);
+		setTimeout( function(){ $('#death').html( "Uh oh... Im late for CIS444");}, 1000);
+		setTimeout( function(){ $('#death').html( "Jardin's gonna kill me!!");}, 1500);
+		setTimeout( function(){ document.body.background=
+			'https://media.giphy.com/media/9u514UZd57mRhnBCEk/giphy.gif'},0);
+		setTimeout( function(){ document.body.background=
+			'https://media.giphy.com/media/4DKJDEsK22SR2/giphy.gif'},1500);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/qTpY17v8tLbC8/giphy.gif'},3200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/12MgUpnxEq3ypy/giphy.gif'},4700);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/l1J9Rht991VZlvSYE/giphy.gif'},6200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/9umH7yTO8gLYY/giphy.gif'},7700);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/eIm624c8nnNbiG0V3g/giphy.gif'},9200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/l0Ex9UwY2qcKLnZHG/giphy.gif'},10700);
+		setInterval( function(){setTimeout( function(){ document.body.background=
+			'https://media.giphy.com/media/9u514UZd57mRhnBCEk/giphy.gif'},0);
+		setTimeout( function(){ document.body.background=
+			'https://media.giphy.com/media/4DKJDEsK22SR2/giphy.gif'},1500);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/qTpY17v8tLbC8/giphy.gif'},3200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/12MgUpnxEq3ypy/giphy.gif'},4700);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/l1J9Rht991VZlvSYE/giphy.gif'},6200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/9umH7yTO8gLYY/giphy.gif'},7700);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/eIm624c8nnNbiG0V3g/giphy.gif'},9200);
+		setTimeout( function(){ document.body.background = 
+			'https://media.giphy.com/media/l0Ex9UwY2qcKLnZHG/giphy.gif'},10700);},12000);
+		
+		
+		
 	</script>
     </body>
 </html>
