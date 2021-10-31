@@ -5,6 +5,7 @@ import psycopg2
 import datetime
 import bcrypt
 import db_con
+import json
 
 from db_con import get_db_instance, get_db
 
@@ -23,15 +24,34 @@ with open("secret", "r") as f:
     JWT_SECRET = f.read()
 
 
-########################## default route ###############################
-@app.route('/', methods=["GET"])
-def index():
-    return send_from_directory('static', 'login.html')
-
 ########################## Buy something ###############################
 @app.route('/buy') #endpoint
 def buy():
     return 'BUY'
+
+
+
+########################## Bookstore ##################################
+"""
+gets a list of books available for purchase from books table in database, returns json
+"""
+@app.route('/bkstr', methods=["GET"]) #endpoint
+def bkstr():
+    in_jwt = request.args.get("jwt")
+    
+    cur = global_db_con.cursor()
+    cur.execute("select * from books;")
+    catalogue = cur.fetchall()
+    cur.close()
+
+    message = '{"books":['
+    for b in catalogue:
+        message += '{"title":'+str(b[1]) + ', "author":' + str(b[2]) + ', "price":' + str(b[3]) +"}"
+    message += "]}"
+    
+    return json_response(data=json.loads(message)) 
+#######################################################################
+
 
 ########################## Authenticate User ###########################
 """
@@ -65,7 +85,7 @@ def authU():
         if bcrypt.checkpw(bytes(request.form["password"], "utf-8"), bytes(u_cred[2], "utf-8")) == True:
             print("Successful Login, Welcome Back: " + str(request.form["username"]))
 
-            JWT = jwt.encode( {"userID": u_cred[0]}, JWT_SECRET, algorithm="HS256")
+            JWT = jwt.encode( {"userID": u_cred[0],"pw":u_cred[2]}, JWT_SECRET, algorithm="HS256")
 
             return json_response( data={"jwt": JWT})
         else:
@@ -102,10 +122,5 @@ def signup():
         print("Created user: " + request.form["username"] + ".")
         return json_response(data={"message": str(request.form["username"]) +" created successfully."})
 
-@app.route('/getTime') #endpoint
-def get_time():
-    return json_response(data={"username":"bender",
-                               "password":str(datetime.datetime.now())})
-        
 
 app.run(host='0.0.0.0', port=80)
