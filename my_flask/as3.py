@@ -23,13 +23,38 @@ global_db_con = get_db()
 with open("secret", "r") as f:
     JWT_SECRET = f.read()
 
+########################## Insert into Cart ###############################
+@app.route('/cart', methods=["POST"]) #endpoint
+def cart():
+    title = request.form["title"]
+    cur = global_db_con.cursor()
+    cur.execute("INSERT INTO cart (title, author, price) SELECT title, author, price FROM books WHERE title = '" + title + "';")
+    cur.close()
+    global_db_con.commit()
+
+    print("Added book to cart.")
+    return json_response(data={"message": str(title) +" added successfully."}, status=200) 
 
 ########################## Buy something ###############################
-@app.route('/buy') #endpoint
+@app.route('/buy', methods=["GET"]) #endpoint
 def buy():
-    return 'BUY'
+    in_jwt = request.args.get("jwt")
 
+    cur = global_db_con.cursor()
+    cur.execute("select * from cart;")
+    buylist = cur.fetchall()
+    cur.close()
 
+    count=0
+    message = '{"buylist":['
+    for b in buylist:
+        if b[0] < len(buylist) :
+            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"},'
+        else:
+            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"}'
+    message += "]}"
+
+    return json_response(data=json.loads(message))
 
 ########################## Bookstore ##################################
 """
@@ -44,12 +69,17 @@ def bkstr():
     catalogue = cur.fetchall()
     cur.close()
 
+    count=0
     message = '{"books":['
     for b in catalogue:
-        message += '{"title":'+str(b[1]) + ', "author":' + str(b[2]) + ', "price":' + str(b[3]) +"}"
+        if b[0] < len(catalogue) :
+            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"},'
+        else:
+            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"}'
     message += "]}"
     
-    return json_response(data=json.loads(message)) 
+    return json_response(data=json.loads(message))
+    
 #######################################################################
 
 

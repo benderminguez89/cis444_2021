@@ -16,9 +16,6 @@
 	background: #f3f3f3;
 	font-family: 'Manjari', sans-serif;
     }
-    table, th, td {
-	border: 1px black solid;
-    }
     a {
 	text-decoration: none;
 	color: #1da1f2;
@@ -171,7 +168,7 @@
 	    left: 0;
 	}
     }
-/* The Overlay (background) */
+    /* The Overlay (background) */
     .overlay {
 	/* Height & width depends on how you want to reveal the overlay (see JS below) */   
 	height: 100%;
@@ -185,6 +182,7 @@
 	overflow-x: hidden; /* Disable horizontal scroll */
 	transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
     }
+
     /* Position the content inside the overlay */
     .overlay-content {
 	position: relative;
@@ -202,10 +200,6 @@
 	color: #818181;
 	display: block; /* Display block instead of inline */
 	transition: 0.3s; /* Transition effects on hover (color) */
-    }
-
-    .overlay table {
-	 border: 1px black solid;
     }
 
     /* When you mouse over the navigation links, change their color */
@@ -233,102 +227,69 @@
   </style>
 </head>
 <body>
-
-  <div id="auth-form">
-    <div id="form" class="form">
+ 
+  <div class="form">
       
-      <ul id="top-area" class="top-area">
+      <ul class="top-area">
         <li class="tab active"><a href="#signup">Sign Up</a></li>
         <li class="tab"><a href="#login">Log In</a></li>
       </ul>
       
-      <div id="tab-content" class="tab-content">
+      <div class="tab-content">
         <div id="signup">   
           <h1>Sign Up</h1>
           
           <form action="/signup" method="post">
 
-	    <div class="top-row">
-	      <div class="label-field">
-		<label>
-		  Username<span class="req">*</span>
-		</label>
-		<input type="text" id="#sign_user" name="#sign_user" />
-              </div>
-              
-              <div class="label-field">
-		<label>
-		  Password<span class="req">*</span>
-		</label>
-		<input type="password"required id="#sign_pw" name="#sign_pw" autocomplete="off"/>
-              </div>
-	    </div>
+	  <div class="top-row">
+	    <div class="label-field">
+              <label>
+		Username<span class="req">*</span>
+              </label>
+              <input type="text" id="#sign_user" name="#sign_user" />
+            </div>
+          
+            <div class="label-field">
+              <label>
+		Password<span class="req">*</span>
+              </label>
+              <input type="password"required id="#sign_pw" name="#sign_pw" autocomplete="off"/>
+            </div>
+	</div>
 
-            <button type="button" class="button button-block" onclick="signup()"/>Sign Up</button>
+          <button type="button" class="button button-block" onclick="signup()"/>Sign Up</button>
 
-</form>
-
-</div>
-
-<div id="login">   
-  <h1>Welcome Back!</h1>
-  
-  <form action="/static/index.html" method="post">
+          </form>
+ 
+        </div>
+        
+        <div id="login">   
+          <h1>Welcome Back!</h1>
+          
+          <form action="/static/index.html" method="post">
+          
+            <div class="label-field">
+            <label>
+              Username<span class="req">*</span>
+            </label>
+            <input type="text" id="#log_user" name="log_user" />
+          </div>
+          
+          <div class="label-field">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required id="#log_pw" name="log_pw" autocomplete="off"/>
+          </div>
+                    
+          <button type="button" class="button button-block" onclick="login()">Log In</button>
     
-    <div class="label-field">
-      <label>
-        Username<span class="req">*</span>
-      </label>
-      <input type="text" id="#log_user" name="log_user" />
-    </div>
-    
-    <div class="label-field">
-      <label>
-        Password<span class="req">*</span>
-      </label>
-      <input type="password"required id="#log_pw" name="log_pw" autocomplete="off"/>
-    </div>
-    
-    <button type="button" class="button button-block" onclick="login()">Log In</button>
-    
-  </form>
-  
+          </form>
+ 
+        </div>
+        
+      </div>  
 </div>
-</div>
-</div>
-</div>
-
-<div id="content-form">
-  <table id="content-table">
-    <tbody>
-      <tr>
-	<td>Title</td>
-	<td>Author</td>
-	<td>Price</td>
-	<td>Add to Cart</td>	  
-	</tr>
-      <tr>
-	</tr>
-      </tbody>
-  </table>
-
-  <button id="goToCart" onclick="showCart()">Go to Cart</button>
-</div>
-
-<div id="cart-form">
-   <table id="cart-table">
-    <tbody>
-      <tr>
-        <td>Title</td>
-        <td>Author</td>
-        <td>Price</td>
-        </tr>
-      <tr>
-        </tr>
-      </tbody>
-  </table>
-</div>
-	
 
 <!-- The overlay -->
 <div id="myNav" class="overlay">
@@ -337,129 +298,109 @@
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
   <!-- Overlay content -->
-  <div id="overlayContent" class="overlay-content">
+  <div class="overlay-content">
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
   </div>
 
 </div>
 
 <!-- Use any element to open/show the overlay navigation menu -->
-<span onclick="openNav()"></span>
+<span onclick="openNav()">open</span>
+ 
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script>
+    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+	
+	var $this = $(this),
+	    label = $this.prev('label');
+	
+	if (e.type === 'keyup') {
+	    if ($this.val() === '') {
+		label.removeClass('active highlight');
+            } else {
+		label.addClass('active highlight');
+            }
+	} else if (e.type === 'blur') {
+	    if( $this.val() === '' ) {
+		label.removeClass('active highlight'); 
+	    } else {
+		label.removeClass('highlight');   
+	    }   
+	} else if (e.type === 'focus') {
+	    
+	    if( $this.val() === '' ) {
+		label.removeClass('highlight'); 
+	    } 
+	    else if( $this.val() !== '' ) {
+		label.addClass('highlight');
+	    }
+	}
+	
+    });
+    
+    $('.tab a').on('click', function (e) {
+	
+	e.preventDefault();
+	
+	$(this).parent().addClass('active');
+	$(this).parent().siblings().removeClass('active');
+	
+	target = $(this).attr('href');
+	
+	$('.tab-content > div').not(target).hide();
+	
+	$(target).fadeIn(600);
+	
+    });
 
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script>
-  $("#content-form").hide();
-  $("#cart-form").hide();
-  $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-      
-      var $this = $(this),
-	  label = $this.prev('label');
-      
-      if (e.type === 'keyup') {
-	  if ($this.val() === '') {
-	      label.removeClass('active highlight');
-          } else {
-	      label.addClass('active highlight');
-          }
-      } else if (e.type === 'blur') {
-	  if( $this.val() === '' ) {
-	      label.removeClass('active highlight'); 
-	  } else {
-	      label.removeClass('highlight');   
-	  }   
-      } else if (e.type === 'focus') {
-	  
-	  if( $this.val() === '' ) {
-	      label.removeClass('highlight'); 
-	  } 
-	  else if( $this.val() !== '' ) {
-	      label.addClass('highlight');
-	  }
-      }
-      
-  });
-  
-  $('.tab a').on('click', function (e) {
-      
-      e.preventDefault();
-      
-      $(this).parent().addClass('active');
-      $(this).parent().siblings().removeClass('active');
-      
-      target = $(this).attr('href');
-      
-      $('.tab-content > div').not(target).hide();
-      
-      $(target).fadeIn(600);
-      
-  });
+    async function signup(){
+	alert("I made it");
+	const response = await $.post("/signup",{
+	    "username": document.getElementById("#sign_user").value,
+	    "password": document.getElementById("#sign_pw").value }, "json");
+	token = await response.data;
+	alert(token);
+	alert(response.data.message);
 
-  async function signup(){
-      const response = await $.post("/signup",{
-	  "username": document.getElementById("#sign_user").value,
-	  "password": document.getElementById("#sign_pw").value }, "json");
-      token = await response.data;
+	return true;
+    }
 
-      return true;
-  }
+    async function login(){
+	alert("I made it 2");
+	const response = await $.post("/authU",{
+	    "username": document.getElementById("#log_user").value,
+	    "password": document.getElementById("#log_pw").value }, "json");
+	if (response.status == 200){
+	    
+	    token = await response.data;
+	    bookstore();
+	   
+	    
+	    alert("made it here");
+	}else{
+	    alert("something is wrong");
 
-  async function login(){
-      const response = await $.post("/authU",{
-	  "username": document.getElementById("#log_user").value,
-	  "password": document.getElementById("#log_pw").value }, "json");
-      if (response.status == 200){
-	  
-	  token = await response.data;
-	  bookstore();
-      }else{
-	  alert("something is wrong");
+	}
+    }
 
-      }
-  }
+    async function bookstore(){
+	const response = await $.get("/bkstr", {"jwt": token.jwt }, "json");
+	alert(response.data);
+	alert("overlay");
+	/* Open when someone clicks on the span element */
 
-  async function bookstore(){
-      $("#auth-form").hide();
-      const response = await $.get("/bkstr", {"jwt": token.jwt }, "json");
-      table = document.getElementById("content-table");
-      
-      for(i=0; i<response.data.books.length; i++) {
-	  row = table.insertRow(i+1);
-	  cell1 = row.insertCell(0);
-	  cell2 = row.insertCell(1);
-	  cell3 = row.insertCell(2);
-	  cell4 = row.insertCell(3);
-	  cell1.innerHTML = response.data.books[i].title;
-	  cell2.innerHTML = response.data.books[i].author;
-	  cell3.innerHTML = response.data.books[i].price;
-	  cell4.innerHTML = '<button onclick="addCart(\'' + response.data.books[i].title + '\')">Buy</button>';
-      }
-     
-      $("#content-form").show();
+	document.getElementById("myNav").style.width = "100%";
 
-  }
-
-  async function addCart(title) {
-      const response = await $.post("/cart",{"title": title}, "json");
- }
-
-  async function showCart(){
-      $("#content-form").hide();
-      const response = await $.get("/buy", {"jwt": token.jwt }, "json");
-      table = document.getElementById("cart-table");
-      
-      for(i=0; i<response.data.buylist.length; i++) {
-          row = table.insertRow(i+1);
-          cell1 = row.insertCell(0);
-          cell2 = row.insertCell(1);
-          cell3 = row.insertCell(2);
-          cell1.innerHTML = response.data.buylist[i].title;
-          cell2.innerHTML = response.data.buylist[i].author;
-          cell3.innerHTML = response.data.buylist[i].price;
-      }
-
-      $("#cart-form").show();
-      
-  }
-  
-</script>
+	/* Close when someone clicks on the "x" symbol inside the overlay */
+	
+	//document.getElementById("myNav").style.width = "0%";
+    }
+        
+    
+  </script>
+ 
 </body>
 </html>

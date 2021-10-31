@@ -92,6 +92,21 @@
             </div>
           </div>
 
+        <div id="login-form">
+            <h3>Login</h3>
+            <h4 id="error"></h4>
+            <input type="text" id='username' name="#login_un" placeholder="Username"/>
+            <br>
+            <input type="password" id='password' name="#login_pw" placeholder="Password"/>
+            <br>
+            <input type="button" id="login" value="Login" onclick="login();"/>
+            <br>
+            <br>
+            <div id=login>
+                <a href="/static/login.html">Return to login</a>
+            </div>
+          </div>
+	
           <script>
               /**
                * Attempts to create a new account given the entered credentials.
@@ -99,29 +114,53 @@
                * - callback is unsuccessful: display an error.
                * - callback is successful: take user to next page.
                */
-              function signup() {
+            async function signup(){
                 if ($("#username").val().length === 0 || $("#password").val().length === 0) {
+                    $("#error").html("Username and password cannot be empty.");
+                    $("#error").css("visibility", "visible");
+                    alert("fuck you");
+		    return;
+                }
+		  
+	    
+                   // POST the entered credentials and determine how to proceed
+                const response = await $.post("/signup",{
+				"username": document.getElementById("username").value,
+		    "password": document.getElementById("password").value }, "json");
+                   
+	                         token = await response.data;
+		                 alert(token);
+	                         alert(response.data.message);
+	           alert("we found out");
+	    return true;
+               
+            }
+                          /**
+               * Attempts to log the user in given their entered credentials.
+               * - username or password fields are empty: display an error.
+               * - callback is unsuccessful: display an error.
+               * - callback is successful: take user to next page.
+               */
+              async function login() {
+                if ($("#login_un").length === 0 || $("#login_pw").length === 0) {
                     $("#error").html("Username and password cannot be empty.");
                     $("#error").css("visibility", "visible");
                     return;
                 }
 
                 // POST the entered credentials and determine how to proceed
-                $.post("/signup", 
-                {
-                    username: $("#username").val(),
-                    password: $("#password").val()
-                }, function(data, status) {
+                  const response = await $.post("/authU",{ 
+                      "login_un": document.getElementById("login_un").value,
+                      "login_pw": document.getElementById("login_pw").value }, "json"); 
                     // note that data contains the parsed JSON (already a js variable)
-                    if (!data.logged_in) {
-                        $("#error").html("Username is already in use.");
-                        $("#error").css("visibility", "visible");
-                    } else {
-                        Cookies.set('jwt', data.jwt);
-                        window.location.assign("/static/books.html");
+                    if (response == 200) {
+                        token = await response.data;
+			alert("dude you did it bro");
+		    } else {
+			alert("fudge dawg, you done fugged it up");
                     }
-                });
-            }
+              }
+            
           </script>
     </body>
 </html>
