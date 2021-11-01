@@ -45,16 +45,21 @@ def buy():
     buylist = cur.fetchall()
     cur.close()
 
-    count=0
+   
+    count=1
     message = '{"buylist":['
     for b in buylist:
-        if b[0] < len(buylist) :
+       
+        if count < len(buylist) :
             message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"},'
+            count=count+1
         else:
             message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"}'
     message += "]}"
 
-    return json_response(data=json.loads(message))
+
+    print(message)
+    return json_response(data=json.loads(message), status=200)
 
 ########################## Bookstore ##################################
 """
