@@ -1,0 +1,42 @@
+import psycopg2
+import bcrypt
+
+def get_db():
+    return psycopg2.connect(host="localhost", dbname="authme" , user="bender", password="minguez")
+
+def get_db_instance():  
+    db  = get_db()
+    cur  = db.cursor( )
+
+    return db, cur 
+ 
+def get_login(username, password):
+    db, cur = get_db_instance()
+
+    query = sql.SQL("select {field} from {table} where {pkey} = "+username+" ;".format(
+        field = sql.Identifier('password')
+        table = sql.Identifier('users')
+        pkey = sql.Identifier('username'))
+
+    cur.execute(query)
+    stored_pw = cur.fetchone()
+
+    if stored_pw == None:
+        return False
+    else:
+        if bcrypt.checkpw(bytes(password, "utf-8"), bytes(stored_pw, "utf-8")) == True:
+            return True       
+
+if __name__ == "__main__":
+    db, cur = get_db_instance()
+
+    cur.execute("select * from users")
+    for r in cur.fetchall():
+        print(r)
+
+    cur.execute("create table music ( song_name varchar(255), rating int);")
+    db.commit()
+
+
+
+
