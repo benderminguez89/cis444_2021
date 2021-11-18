@@ -16,7 +16,7 @@ def handle_request():
     un = request.form['firstname']
     
     password_from_user_form = request.form['password']
-    logger.debug(un)
+ 
     user = {
             "sub" : request.form['firstname'] #sub is used by pyJwt as the owner of the token
             }
@@ -34,11 +34,11 @@ def handle_request():
 
     else: #if the user exists and the password matches
         if bcrypt.checkpw(bytes(pw, "utf-8"), bytes(u_cred[2], "utf-8")) == True:
-            print("Successful Login, Welcome Back: " + un)
+            logger.debug("Successful Login, Welcome Back: " + un)
  
             return json_response( token= create_token(user), authenticated = True)
         else:
-            print("Imposter! Thats not the password!!")
+            logger.debug("Imposter! Thats not the password!!")
 
             return json_response(status_ = 401, data={"message": "Incorrect Password"}, authenticated = False)
     
@@ -46,5 +46,5 @@ def handle_request():
     if not user:
         return json_response(status_=401, message = 'Invalid credentials', authenticated =  False )
 
-    return json_response( token = create_token(user) , authenticated = False)
+    return json_response( token = create_token(user) , authenticated = True)
 
