@@ -17,10 +17,10 @@ def handle_request():
     booklist = '{"books":['
     for b in catalogue:
         if b[0] < len(catalogue) :
-            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"},'
+            booklist += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"},'
         else:
-            message += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"}'
+            booklist += '{"title":"'+str(b[1]) + '","author":"' + str(b[2]) + '","price":"' + str(b[3]) +'"}'
     booklist += "]}"
     
-    return json_response( token = create_token(  g.jwt_data ) , booklist)
+    return json_response( token = create_token(  g.jwt_data ) , books={booklist})
 
