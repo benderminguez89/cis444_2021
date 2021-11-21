@@ -8,7 +8,7 @@ from tools.logging import logger
 
 def handle_request():
     logger.debug("Get Books Handle Request")
-    in_jwt = request.args.get("jwt")
+    
     
     cur = g.db.cursor()
     cur.execute(sql.SQL("SELECT * FROM books;"))
