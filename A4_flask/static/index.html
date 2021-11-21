@@ -188,6 +188,7 @@
       $('#content-form').hide();
       $('#content-table').hide();
       function send_form(){
+	  $('#signup').hide();
 	  $('#content-form').hide();
 	  $.post("/open_api/login", { "firstname":$('#fname').val(), "password":$('#password').val()},
                  function(data, textStatus) {
@@ -205,6 +206,29 @@
 		 });
 	  return false;
       }
+
+      
+      function send_form2(){
+          $('#content-form').hide();
+	  $('#login').hide()
+	  $('#signup').show()
+          $.post("/open_api/signup", { "username":$('#newname').val(), "password":$('#newpassword').val()},
+                 function(data, textStatus) {
+                     console.log("made it here");
+                     //this gets called when browser receives response from server
+                     console.log(data.token);
+                     //Set global JWT
+                     jwt = data.token;
+                     //make secure call with the jwt
+                     get_books();
+                 }, "json").fail( function(response) {
+                     //this gets called if the server throws an error
+                     console.log("error");
+                     console.log(response);
+                 });
+          return false;
+      }
+
 
       function addCart(title){
 	  console.log("called add_cart");
@@ -265,10 +289,10 @@
     <div id="signup">
       <form >
   	<label for="fname">Username:</label><br>
-  	<input type="text" id="fname" name="fname" value="Username"><br>
+  	<input type="text" id="newname" name="newname" value="Username"><br>
   	<label for="password">Password:</label><br>
-  	<input type="password" id="password" name="password" value="12212"><br><br>
-  	<input type="submit" value="Signup" onclick="return send_form();">
+  	<input type="password" id="newpassword" name="newpassword" value="12212"><br><br>
+  	<input type="submit" value="Signup" onclick="return send_form2();">
       </form>
     </div>
     

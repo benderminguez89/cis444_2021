@@ -13,13 +13,7 @@ def handle_request():
     #use data here to auth the user
 
     pw = request.form['password']
-    un = request.form['firstname']
-
-    password_from_user_form = request.form['password']
-
-    user = {
-            "sub" : request.form['firstname'] #sub is used by pyJwt as the owner of the token
-            }
+    un = request.form['username']
 
     cur = g.db.cursor()
 
@@ -32,11 +26,11 @@ def handle_request():
         return json_response( status_= 401, message= "Username already exists", authentication = False)
 
     else: #if the user exists and the password matches
-        salty_pw = bcrypt.checkpw(bytes(pw, "utf-8")):
+        salty_pw = bcrypt.hashpw(bytes(pw, "utf-8"), bcrypt.gensalt(10))
 
-        cur.execute(sql.SQL("INSERT INTO users %s;"),(un,))
+        cur.execute(sql.SQL("INSERT INTO users (username, password) VALUES(%s, %s);"),(un,salty_pw.decode("utf-8")))
         cur.close()
-
+        g.db.commit()
         logger.debug("Successful Signup, Welcome " + un)
 
-            return json_response( token= create_token(user), authenticated = True)
+        return "successful signup"
