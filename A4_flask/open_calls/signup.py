@@ -8,15 +8,15 @@ from psycopg2 import sql
 from tools.logging import logger
 
 def handle_request():
-    
+
     logger.debug("Login Handle Request")
     #use data here to auth the user
 
     pw = request.form['password']
     un = request.form['firstname']
-    
+
     password_from_user_form = request.form['password']
- 
+
     user = {
             "sub" : request.form['firstname'] #sub is used by pyJwt as the owner of the token
             }
@@ -25,25 +25,18 @@ def handle_request():
 
     cur.execute(sql.SQL("SELECT * FROM users WHERE username = %s;"),(un,))
     u_cred = cur.fetchone() #store the id associated with the requested username from the db
-    cur.close()
-
+    
     #check user credentials agains the db
-    if u_cred is None:    #if no such user exists in the db
-        logger.debug("No such user")
-        return json_response( status_= 401, message= "No such user ", authentication = False)
+    if u_cred is not None:    #if no such user exists in the db
+        logger.debug("Username already exists")
+        return json_response( status_= 401, message= "Username already exists", authentication = False)
 
     else: #if the user exists and the password matches
-        if bcrypt.checkpw(bytes(pw, "utf-8"), bytes(u_cred[2], "utf-8")) == True:
-            logger.debug("Successful Login, Welcome Back: " + un)
- 
+        salty_pw = bcrypt.checkpw(bytes(pw, "utf-8")):
+
+        cur.execute(sql.SQL("INSERT INTO users %s;"),(un,))
+        cur.close()
+
+        logger.debug("Successful Signup, Welcome " + un)
+
             return json_response( token= create_token(user), authenticated = True)
-        else:
-            logger.debug("Imposter! Thats not the password!!")
-
-            return json_response(status_ = 401, data={"message": "Incorrect Password"}, authenticated = False)
-    
-    
-    if not user:
-        return json_response(status_=401, message = 'Invalid credentials', authenticated =  False )
-
-    return json_response( token = create_token(user) , authenticated = True)

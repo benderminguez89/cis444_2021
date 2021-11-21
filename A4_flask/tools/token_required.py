@@ -28,6 +28,7 @@ def token_required(f):
 
         try:
             token = auth_headers[1]
+            #logger.debug(token)
             logger.debug("Got token")
             data = jwt.decode(token,  secrets['JWT'], algorithms=["HS256"])
             #set global jwt_data
