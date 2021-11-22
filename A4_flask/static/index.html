@@ -278,17 +278,17 @@
 
       function showCart(){
 	  $('#content-table').hide();
-	  $('#cart-table').show();
+	  //$('#cart-table').show();
 	  
 	  console.log("called show purchases");
           // jwt = data.token
-          console.log(title);
-
-          secure_get_with_data("/secure_api/purchases", {"username":$('#fname').val()} , function(data){
+          
+          secure_get_with_token("/secure_api/purchases" , function(data){
 	      console.log(" to user cart");
-	      
-	      table = document.getElementById("cart-table");
 
+	      table = document.getElementById("cart-table");
+	      console.log(data)
+	      
               for(var i=0; i< Object.keys(data.data.books).length; i++) {
                   console.log(data.data.books[i]);
                   row = table.insertRow(i+1);
@@ -300,7 +300,7 @@
                   cell2.innerHTML = data.data.books[i].author;
                   cell3.innerHTML = data.data.books[i].price;                 
 	      }
-              $('#content-form').show();
+              $('#cart-table').show();
           },
 	    
 			       function(err){console.log(err) });

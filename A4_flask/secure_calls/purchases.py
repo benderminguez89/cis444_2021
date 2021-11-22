@@ -8,24 +8,25 @@ from tools.logging import logger
 
 def handle_request():
     logger.debug("Get Purchases Handle Request")
-
-    un = request.args.get('username')
+    
+    un = g.jwt_data['sub']
     
     cur = g.db.cursor()
-    cur.execute(sql.SQL("SELECT (title, author, price) FROM cart WHERE customer = %s;"),(un,))
+    cur.execute(sql.SQL("SELECT title, author, price FROM cart WHERE customer = %s;"),(un,))
     buylist = cur.fetchall()
     cur.close()
-    
-    message = '{"buylist":['
+
+    count = 1
+    books = '{"books":['
     for b in buylist:
-       
         if count < len(buylist) :
-            message += '{"title":"'+str(b[0]) + '","author":"' + str(b[1]) + '","price":"' + str(b[2]) +'"},'
-            count=count+1
+            books += '{"title":"'+str(b[0]) + '","author":"' + str(b[1]) + '","price":"' + str(b[2]) +'"},'
+            count += 1
         else:
-            message += '{"title":"'+str(b[0]) + '","author":"' + str(b[1]) + '","price":"' + str(b[2]) +'"}'
-    message += "]}"
+            books += '{"title":"'+str(b[0]) + '","author":"' + str(b[1]) + '","price":"' + str(b[2]) +'"}'
+    books += "]}"
 
+    logger.debug(books)
+    g.jwt_data['books'] = books
 
-    print(message)
-    return json_response( token = create_token( g.jwt_data) , data = json.loads(message))
+    return json_response( token = create_token( g.jwt_data ) , data= json.loads(books))
