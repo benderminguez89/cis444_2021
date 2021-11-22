@@ -191,6 +191,7 @@
       function send_form(){
 	  $('#signup').hide();
 	  $('#content-form').hide();
+	  $('#cart-table').hide()
 	  $.post("/open_api/login", { "firstname":$('#fname').val(), "password":$('#password').val()},
                  function(data, textStatus) {
 		     console.log("made it here");
@@ -211,6 +212,7 @@
       
       function send_form2(){
           $('#content-form').hide();
+	  $('#cart-table').hide();
 	  $('#login').hide()
 	  $('#signup').show()
           $.post("/open_api/signup", { "username":$('#newname').val(), "password":$('#newpassword').val()},
@@ -249,6 +251,7 @@
 	  console.log("helloooo books")
 	  $('#login').hide();
 	  $('#signup').hide();
+	  $('#cart-table').hide();
 	  $('#content-table').show();	  
 	  //$('#content-form').show();
 	  //make secure call with the jwt
@@ -277,7 +280,7 @@
       }
 
       function showCart(){
-	  $('#content-table').hide();
+	  $('#content-form').hide();
 	  //$('#cart-table').show();
 	  
 	  console.log("called show purchases");
@@ -288,27 +291,32 @@
 
 	      table = document.getElementById("cart-table");
 	      console.log(data)
-	      
+	      var total = 0.00;
               for(var i=0; i< Object.keys(data.data.books).length; i++) {
                   console.log(data.data.books[i]);
                   row = table.insertRow(i+1);
                   cell1 = row.insertCell(0);
                   cell2 = row.insertCell(1);
                   cell3 = row.insertCell(2);
-                  cell4 = row.insertCell(3);
+                  
                   cell1.innerHTML = data.data.books[i].title;
                   cell2.innerHTML = data.data.books[i].author;
-                  cell3.innerHTML = data.data.books[i].price;                 
+                  cell3.innerHTML = data.data.books[i].price;
+                  total += parseFloat(data.data.books[i].price);
 	      }
+
+	      alert("Your total comes to: $" +total);
               $('#cart-table').show();
+	     
           },
 	    
-			       function(err){console.log(err) });
+				function(err){console.log(err) });
       }
       
 
       </script>
     <div id="login">
+      <div>
       <form >
   	<label for="fname">Username:</label><br>
   	<input type="text" id="fname" name="fname" value="Username"><br>
@@ -316,9 +324,11 @@
   	<input type="password" id="password" name="password" value="12212"><br><br>
   	<input type="submit" value="login" onclick="return send_form();">
       </form>
+      </div>
     </div>
     
     <div id="signup">
+      <div>
       <form >
   	<label for="fname">Username:</label><br>
   	<input type="text" id="newname" name="newname" value="Username"><br>
@@ -326,9 +336,11 @@
   	<input type="password" id="newpassword" name="newpassword" value="12212"><br><br>
   	<input type="submit" value="Signup" onclick="return send_form2();">
       </form>
+      </div>
     </div>
     
     <div id="content-form">
+      <div>
       <table id="content-table">
 	<tbody>
 	  <tr>
@@ -343,6 +355,7 @@
       </table>
 
       <button id="goToCart" onclick="showCart()">Go to Cart</button>
+      </div>
     </div>
 
     <div style= "height: 100%;
