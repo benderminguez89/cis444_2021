@@ -1,8 +1,7 @@
 import ticketpy
 
 # input api key
-consumer_key = 'Scjv74PwIErH2jthOFDmmAZPE8f0OWGq'
-consumer_secret = 'UqaDZZHtGLAQtIOV'
+
 tm_client = ticketpy.ApiClient(consumer_key)
 
 pages = tm_client.events.find(
