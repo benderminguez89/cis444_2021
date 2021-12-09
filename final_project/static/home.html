@@ -16,10 +16,29 @@
 	  position: bottom; 
       }
 
+      .container2 { 
+	  background-color: #00FA9A;
+	  border-radius: 25px;
+	  height: 125px;
+	  width: 300px;
+	  position: absolute;
+	  top: 60%;
+	  left: 32%;
+      }
+
       .center {
 	  margin: 0;
 	  position: absolute;
 	  top: 65%;
+	  left: 50%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .center2 {
+	  margin: 0;
+	  position: absolute;
+	  top: 50%;
 	  left: 50%;
 	  -ms-transform: translate(-50%, -50%);
 	  transform: translate(-50%, -50%);
@@ -83,33 +102,27 @@
     </style>
   </head>
   <body>
-    <div class= "container">
-      <div class = "center">
-	<button class="button">View Events</button>
+    <div class= "container2">
+      <div class = "center2">
+	<form>
+  	  <label for="username">Username:</label><br>
+  	  <input type="text" id="username" name="username" value=""><br>
+  	  <label for="password">Password:</label><br>
+  	  <input type="text" id="password" name="lname" value="">
+	</form>
       </div>
     </div>
 
     <div class= "container">
       <div class = "left">
-	<button class="button">Home</button>
+	<button class="button">SignUP</button>
       </div>
     </div>
 
-    <div class= "container">
-      <div class = "left2">
-	<button class="button">Amigos</button>
-      </div>
-    </div>
-
-    <div class= "container">
-      <div class = "left3">
-	<button class="button">Interests</button>
-      </div>
-    </div>
 
     <div class= "container">
       <div class = "right">
-	<button class="button">SignOut</button>
+	<button class="button">Log In</button>
       </div>
     </div>
   </body>
