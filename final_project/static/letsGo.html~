@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+	  background-color: #0099cc;
+	  background-image: url('https://media.giphy.com/media/kLmOg1tamSbmE9fAX7/giphy.gif');
+	  background-repeat: no-repeat;
+	  top: 25%;
+	  left: 50%;
+	  background-position: top;
+      }
+
+      .container { 
+	  height: 200px;
+	  position: bottom; 
+      }
+
+      .center {
+	  margin: 0;
+	  position: absolute;
+	  top: 65%;
+	  left: 50%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .left {
+	  margin: 0;
+	  position: absolute;
+	  top: 15%;
+	  left: 112px;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .left2 {
+	  margin: 0;
+	  position: absolute;
+	  top: 25%;
+	  left: 120px;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .left3 {
+	  margin: 0;
+	  position: absolute;
+	  top: 35%;
+	  left: 127px;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .right {
+	  margin: 0;
+	  position: absolute;
+	  top: 15%;
+	  right: 0%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+      }
+
+      .button {
+	  padding: 15px 25px;
+	  font-size: 24px;
+	  text-align: center;
+	  cursor: pointer;
+	  outline: none;
+	  color: #FFFF00;
+	  background-color: #00FA9A;
+	  border: none;
+	  border-radius: 15px;
+	  box-shadow: 0 9px #999;
+      }
+
+      .button:hover {background-color: #FF1493}
+
+      .button:active {
+	  background-color: #ff00ff;
+	  box-shadow: 0 5px #ff66ff;
+	  transform: translateY(4px);
+    </style>
+  </head>
+  <body>
+    <div class= "container">
+      <div class = "center">
+	<button class="button">View Events</button>
+      </div>
+    </div>
+
+    <div class= "container">
+      <div class = "left">
+	<button class="button">Home</button>
+      </div>
+    </div>
+
+    <div class= "container">
+      <div class = "left2">
+	<button class="button">Amigos</button>
+      </div>
+    </div>
+
+    <div class= "container">
+      <div class = "left3">
+	<button class="button">Interests</button>
+      </div>
+    </div>
+
+    <div class= "container">
+      <div class = "right">
+	<button class="button">SignOut</button>
+      </div>
+    </div>
+  </body>
+</html>
