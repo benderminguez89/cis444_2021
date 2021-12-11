@@ -3,28 +3,32 @@
   <head>
     <link rel='stylesheet' type='text/css' href='style.css'>
   </head>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"
+               integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	  <script type='text/javascript' src='home.js'></script>
+		  
   <body>
     <div class= "container2">
       <div class = "center2">
-	<form>
+	<form id="form">
   	  <label for="username">Username:</label><br>
   	  <input type="text" id="username" name="username" value=""><br>
   	  <label for="password">Password:</label><br>
-  	  <input type="text" id="password" name="lname" value="">
+  	  <input type="password" id="password" name="password" value="">
 	</form>
       </div>
     </div>
 
     <div class= "container">
       <div class = "left">
-	<button class="button">SignUP</button>
+	<button class="button" id="signup" name="signup" value="signup" onclick="send_form2();">SignUp</button>
       </div>
     </div>
 
 
     <div class= "container">
       <div class = "right">
-	<button class="button">Log In</button>
+	<button class="button" id="login" name="login" value="login" onclick="send_form();">Log In</button>
       </div>
     </div>
   </body>
