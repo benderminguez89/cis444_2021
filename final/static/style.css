@@ -108,7 +108,6 @@
 .table_container{
     flex: auto;
     min-height: 0;
-    background-image:linear-gradient(to top, darkviolet, lightgreen);
     padding: 10px;
     overflow-y: scroll;
     height: 50vh;
