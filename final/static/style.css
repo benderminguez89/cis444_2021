@@ -27,6 +27,14 @@
     transform: translate(-50%, -50%);
 }
 
+.center3{
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    display: flex;
+    align-items: center;
+}
 .container{
     position: absolute;
     top: 0%;
@@ -45,6 +53,17 @@
     position: absolute;
     top: 48%;
     left: 42%;
+}
+
+.container3 {
+    background-image: linear-gradient(to bottom, yellow, violet);
+    border-radius: 25px;
+    height: 500px;
+    width: 500px;
+    position: absolute;
+    display: flex;
+    top: 48%;
+    left: 50%;
 }
 
 .button {
@@ -86,6 +105,29 @@
 
 }
 
+.table_container{
+    flex: auto;
+    min-height: 0;
+    background-image:linear-gradient(to top, darkviolet, lightgreen);
+    padding: 10px;
+    overflow-y: scroll;
+    height: 50vh;
+}
+
+table, th, td{
+    border: 2px black solid;
+    border-style: outset;
+    border-collapse: collapse;
+    padding: 8px;
+    margin: 100px 20px 0 25px;
+    overflow-y: auto;
+}
+
+th, td{
+    background-color: lightgrey;
+    text-align: center;
+    padding: 8px;
+}
 .top_right{
     position: absolute;
     top: 10%;
