@@ -114,16 +114,18 @@
 }
 
 table, th, td{
-    border: 2px black solid;
+    border: 4px darkviolet solid;
     border-style: outset;
     border-collapse: collapse;
+    text-color: yellow;
     padding: 8px;
     margin: 100px 20px 0 25px;
     overflow-y: auto;
 }
 
 th, td{
-    background-color: lightgrey;
+    background-color: lightgreen;
+    text-color: yellow;
     text-align: center;
     padding: 8px;
 }

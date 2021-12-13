@@ -63,6 +63,10 @@
       }
 
       function home(){
+	  $("#Events").hide();
+	  $("#Movies").hide();
+	  $("#Amigos").hide();
+	  $("#letsGO").hide();
 	  $("#Start").hide();
 	  $("#Home").show();
 
@@ -217,7 +221,7 @@
       </div>
 
       <div>
-	<button class="button top_left" onclick="amigos();">Amigos</button>
+	<button class="button top_left" onclick="home();">Homes</button>
       </div>
 
       <div>
@@ -225,7 +229,7 @@
       </div>
 
       <div>
-	<button class="button bottom_right" onclick="events();">Events</button>
+	<button class="button bottom_left" onclick="events();">Events</button>
       </div>
 
       <div>
@@ -237,6 +241,26 @@
     <!---------------------------------- Events ------------------------------------->
 
     <div id="Events" style="display: none;">
+      <div>
+	<button class="button top_right" onclick="adios();">Adios</button>
+      </div>
+
+      <div>
+	<button class="button top_left" onclick="home();">Home</button>
+      </div>
+
+      <div>
+	<button class="button mid_left" onclick="movies();">Movies</button>
+      </div>
+
+      <div>
+	<button class="button bottom_left" onclick="amigos();">Amigos</button>
+      </div>
+
+      <div>
+	<button class="button center2" onclick="letsGo();">LetsGo!!!</button>
+      </div>
+
       <div class="center3"  id="content-form">
 	<div class="table_container">
 	  <table id="content-table">
