@@ -4,24 +4,165 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="/static/cis444.js"></script>
-    <script src="letsGo.js">
-      $("#Home").hide();
-    </script>
     <meta charset="UTF-8">
     <title>LETS GO!</title>
     <link href="style.css" rel="stylesheet">
   </head>
   <body style="background-color = darkviolet;">
 
-    <script src="letsGo.js">
-      $("#Home").hide();
-    </script>
+    <script>
+      //js file
+      //login function
+      function login(){
+
+	  var user = $('#username').val();
+	  var pass = $('#password').val();
+	  if(user.length == 0 || pass.length == 0){
+              return false;
+	  }
+	  $.post("/open_api/login", { "username": user, "password": pass},
+		 function(data, textStatus) {
+		     console.log("made it here");
+		     //this gets called when browser receives response from server
+		     //Set global JWT
+		     jwt = data.token;
+		     //make secure call with the jwt
+		     home();
+
+		 }, "json").fail( function(response) {
+		     //this gets called if the server throws an error
+		     console.log("error");
+		     console.log(response);
+		 });
+	  return false;
+      }
+
+      //sign up function
+      function signup(){
+
+	  var user = $('#username').val();
+	  var pass = $('#password').val();
+	  if(user.length == 0 || pass.length == 0){
+              return false;
+	  }
+	  $.post("/open_api/signup", { "username": user, "password": pass},
+		 function(data, textStatus) {
+		     console.log("made it here");
+		     //this gets called when browser receives response from server
+		     //Set global JWT
+		     jwt = data.token;
+		     //make secure call with the jwt
+		     home(data);
+
+		 }, "json").fail( function(response) {
+		     //this gets called if the server throws an error
+		     console.log("error");
+		     console.log(response);
+		 });
+	  return false;
+      }
+
+      function home(){
+	  $("#Start").hide();
+	  $("#Home").show();
+
+      }
+
+      function amigos(){
+	  $("#Home").hide();
+	  $("#Start").show();
+      }
+
+      function movies(){
+	  $("#Home").hide();
+	  console.log("Take me to the Movies!");
+	  	  
+	  secure_get_with_token("/secure_api/amc",  function(data){
+              console.log("got movies");
+              console.log(data);
+
+
+	      // table = document.getElementById("content-table");
+
+              for(var i=0; i< Object.keys(data.data.movies).length; i++) {
+		  console.log(data.data.movies[i]);
+		  // row = table.insertRow(i+1);
+		  // cell1 = row.insertCell(0);
+		  // cell2 = row.insertCell(1);
+		  // cell3 = row.insertCell(2);
+		  // cell4 = row.insertCell(3);
+		  // cell1.innerHTML = data.data.books[i].title;
+		  // cell2.innerHTML = data.data.books[i].author;
+		  //cell3.innerHTML = data.data.books[i].price;
+		  //cell4.innerHTML = '<button onclick="addCart(\'' + data.data.books[i].title + '\')">Buy</button>';
+              }
+
+              for(var i=0; i< Object.keys(data.data.coming_soon).length; i++) {
+		  console.log(data.data.coming_soon[i]);
+		  // row = table.insertRow(i+1);
+		  // cell1 = row.insertCell(0);
+		  // cell2 = row.insertCell(1);
+		  // cell3 = row.insertCell(2);
+		  // cell4 = row.insertCell(3);
+		  // cell1.innerHTML = data.data.books[i].title;
+		  // cell2.innerHTML = data.data.books[i].author;
+		  //cell3.innerHTML = data.data.books[i].price;
+		  // cell4.innerHTML = '<button onclick="addCart(\'' + data.data.books[i].title + '\')">Buy</button>';
+              }
+              $("#Start").show();
+	  },
+				function(err){ console.log(err) });
+	  
+      }
+
+
+      function events(){
+	  $("#Home").hide();
+	  
+	  secure_get_with_token("/secure_api/ticket",  function(data){
+              console.log("got tickets");
+              console.log(data);
+
+
+	      table = document.getElementById("content-table");
+	      
+              for(var i=0; i< Object.keys(data.data.events).length; i++) {
+		  console.log(data.data.events[i]);
+		  row = table.insertRow(i+1);
+		  cell1 = row.insertCell(0);
+		  cell2 = row.insertCell(1);
+		  cell3 = row.insertCell(2);
+		  cell4 = row.insertCell(3);
+		  cell1.innerHTML = data.data.events[i].title;
+		  cell2.innerHTML = "";
+		  cell3.innerHTML = "";
+		  cell4.innerHTML = '<button onclick="interested(\'' +data.data.events[i]+ '\')">Interested</button>';
+              }
+              $("#Events").show();
+	  },
+				function(err){ console.log(err) });
+	  
+      }
+
+      
+      function adios(){
+	  $("#Home").hide();
+	  $("#Start").show();
+
+      }
+
+      function letsGo(){
+	  $("#Home").hide();
+	  $("#Start").show();
+      }
+      
+      </script>
 
     <div class="container">
       <div class="center"></div>
     </div>
     
-<!--------------------------Signup/Login------------------------------------------->
+    <!--------------------------Signup/Login------------------------------------------->
 
     <div id="Start">
       <div>
@@ -44,7 +185,7 @@
       </div>
     </div>
 
-<!-------------------------------- Home --------------------------------------->    
+    <!-------------------------------- Home --------------------------------------->    
     
     <div id="Home" style="display: none;">
       <div>
@@ -52,48 +193,72 @@
       </div>
 
       <div>
-	<button class="button top_left" onclick="adios();">Amigos</button>
+	<button class="button top_left" onclick="amigos();">Amigos</button>
       </div>
 
       <div>
-	<button class="button mid_left" onclick="adios();">Movies</button>
+	<button class="button mid_left" onclick="movies();">Movies</button>
       </div>
 
       <div>
-	<button class="button bottom_left" onclick="adios();">Sports</button>
+	<button class="button bottom_left" onclick="events();">Events</button>
       </div>
 
       <div>
-	<button class="button center2" onclick="adios();">LetsGo!!!</button>
+	<button class="button center2" onclick="letsGo();">LetsGo!!!</button>
       </div>
     </div>
     
-<!-------------------------------- Amigos ------------------------------------->
+    <!-------------------------------- Amigos ------------------------------------->
     
-    <div id="Home" style="display: none;">
+    <div id="Amigos" style="display: none;">
       <div>
 	<button class="button top_right" onclick="adios();">Adios</button>
       </div>
 
       <div>
-	<button class="button top_left" onclick="adios();">Amigos</button>
+	<button class="button top_left" onclick="amigos();">Amigos</button>
       </div>
 
       <div>
-	<button class="button mid_leftt" onclick="adios();">Movies</button>
+	<button class="button mid_left" onclick="movies();">Movies</button>
       </div>
 
       <div>
-	<button class="button bottom_right" onclick="adios();">Sports</button>
+	<button class="button bottom_right" onclick="events();">Events</button>
       </div>
 
       <div>
-	<button class="button center2" onclick="adios();">LetsGo!!!</button>
+	<button class="button center2" onclick="letsGo();">LetsGo!!!</button>
       </div>
 
     </div>
 
+    <!---------------------------------- Events ------------------------------------->
 
+    <div id="Events" style="display: none;">
+      <div id="content-form">
+	<div>
+	  <table id="content-table">
+	    <tbody>
+	      <tr>
+		<td>Event</td>
+		<td></td>
+		<td></td>
+		<td>Interested?</td>	  
+	      </tr>
+	      <tr>
+	      </tr>
+	    </tbody>
+	  </table>
+
+	  <button id="goToCart" onclick="letsGo()">Go to Cart</button>
+	</div>
+      </div>
+    </div>
+    
+
+    
 
     
   </body>
