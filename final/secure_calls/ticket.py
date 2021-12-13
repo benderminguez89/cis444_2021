@@ -31,6 +31,6 @@ def handle_request():
     for p in pages:
         events += '{"title":"'+str(p)+'"},'
         print(p.name)
-    events += "]}"
+    events += '{"end":"none"}]}'
 
-    return json_response( token = create_token(  g.jwt_data ) , data= json.loads(event))
+    return json_response( token = create_token(  g.jwt_data ) , data= json.loads(events, strict=False))
