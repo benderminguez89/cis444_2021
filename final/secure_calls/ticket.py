@@ -1,5 +1,5 @@
 import ticketpy
-from datetime import date
+from datetime import date, timedelta
 import os
 
 from flask import request, g
@@ -14,7 +14,10 @@ def handle_request():
     logger.debug("Get Books Handle Request")
 
     now = date.today()
-
+    til = timedelta(weeks=52)
+    til = now + til
+    print(til)
+    
     key = os.environ.get('TIX_API')
 
 
@@ -23,13 +26,13 @@ def handle_request():
     pages = tm_client.events.find(
         city='San Diego',
         startDateTime= str(now) +'T20:00:00Z',
-        end_date_time='2022-12-16T20:00:00Z'
+        end_date_time= str(til) +'T20:00:00Z'
     ).limit(2)
 
     print("\nUpcoming Events in San Diego:")
     events = '{"events":['
     for p in pages:
-        events += '{"title":"'+str(p)+'"},'
+        events += '{"title":"'+str(p.name)+'"},'
         print(p.name)
     events += '{"end":"none"}]}'
 
