@@ -103,34 +103,36 @@
               console.log(data);
 
 
-	      // table = document.getElementById("content-table");
+	      table2 = document.getElementById("content-table2");
 
               for(var i=0; i< Object.keys(data.data.now_playing).length - 1; i++) {
 		  console.log(data.data.now_playing[i]);
-		  // row = table.insertRow(i+1);
-		  // cell1 = row.insertCell(0);
-		  // cell2 = row.insertCell(1);
-		  // cell3 = row.insertCell(2);
-		  // cell4 = row.insertCell(3);
-		  // cell1.innerHTML = data.data.books[i].title;
-		  // cell2.innerHTML = data.data.books[i].author;
-		  //cell3.innerHTML = data.data.books[i].price;
-		  //cell4.innerHTML = '<button onclick="addCart(\'' + data.data.books[i].title + '\')">Buy</button>';
+		  row = table2.insertRow(i+1);
+		  cell1 = row.insertCell(0);
+		  cell2 = row.insertCell(1);
+		  cell3 = row.insertCell(2);
+		  cell4 = row.insertCell(3);
+		  cell1.innerHTML = data.data.now_playing[i].title;
+		  cell2.innerHTML = "";
+		  cell3.innerHTML = "";
+		  cell4.innerHTML = '<button onclick="interested(\'' + data.data.now_playing[i].title + '\')">Interested</button>';
               }
+
+	      table3 = document.getElementById("content-table3");
 
               for(var i=0; i< Object.keys(data.data2.coming_soon).length - 1; i++) {
 		  console.log(data.data2.coming_soon[i]);
-		  // row = table.insertRow(i+1);
-		  // cell1 = row.insertCell(0);
-		  // cell2 = row.insertCell(1);
-		  // cell3 = row.insertCell(2);
-		  // cell4 = row.insertCell(3);
-		  // cell1.innerHTML = data.data.books[i].title;
-		  // cell2.innerHTML = data.data.books[i].author;
-		  //cell3.innerHTML = data.data.books[i].price;
-		  // cell4.innerHTML = '<button onclick="addCart(\'' + data.data.books[i].title + '\')">Buy</button>';
+		  row = table3.insertRow(i+1);
+		  cell1 = row.insertCell(0);
+		  cell2 = row.insertCell(1);
+		  cell3 = row.insertCell(2);
+		  cell4 = row.insertCell(3);
+		  cell1.innerHTML = data.data2.coming_soon[i].title;
+		  cell2.innerHTML = "";
+		  cell3.innerHTML = "";
+		  cell4.innerHTML = '<button onclick="interested(\'' + data.data2.coming_soon[i].title + '\')">Interested</button>';
               }
-              $("#Start").show();
+              $("#Movies").show();
 	  },
 				function(err){ console.log(err) });
 	  
@@ -297,9 +299,9 @@
     </div>
     
 
-    <!---------------------------------- Events ------------------------------------->
+    <!---------------------------------- Movies ------------------------------------->
 
-    <div id="Events" style="display: none;">
+    <div id="Movies" style="display: none;">
       <div>
 	<button class="button top_right" onclick="adios();">Adios</button>
       </div>
@@ -309,7 +311,7 @@
       </div>
 
       <div>
-	<button class="button mid_left" onclick="movies();">Movies</button>
+	<button class="button mid_left" onclick="amigos();">Amigos</button>
       </div>
 
       <div>
@@ -319,15 +321,32 @@
 	<button class="button bottom_right"id="goToCart" onclick="letsGo()">LetsGO!!!</button>
       </div>
 
-      <div class="center3"  id="content-form">
+      <div class="left"  id="content-form2">
 	<div class="table_container">
-	  <table id="content-table">
+	  <table id="content-table2">
 	    <tbody>
 	      <tr>
-		<td>Friend</td>
+		<td>Now Playing</td>
 		<td></td>
-		<td>Status</td>
-		<td>Accept/Deny</td>	  
+		<td></td>
+		<td>Interested?</td>	  
+	      </tr>
+	      <tr>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+
+      <div class="right"  id="content-form3">
+	<div class="table_container">
+	  <table id="content-table3">
+	    <tbody>
+	      <tr>
+		<td>Coming Soon</td>
+		<td></td>
+		<td></td>
+		<td>Interested?</td>	  
 	      </tr>
 	      <tr>
 	      </tr>
