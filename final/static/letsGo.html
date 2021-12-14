@@ -94,8 +94,13 @@
 			       function(err){console.log(err) });
       }
 
-      function movies(){
+      function movies(){	  
+	  $("#Events").hide();
+	  $("#Amigos").hide();
+	  $("#letsGo").hide();
 	  $("#Home").hide();
+	  $("#Start").hide();
+
 	  console.log("Take me to the Movies!");
 	  	  
 	  secure_get_with_token("/secure_api/amc",  function(data){
@@ -140,6 +145,9 @@
 
 
       function events(){
+	  $("#Movies").hide();
+	  $("#Amigos").hide();
+	  $("#letsGo").hide();
 	  $("#Home").hide();
 	  $("#Start").hide();
 	  
