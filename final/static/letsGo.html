@@ -66,7 +66,7 @@
 	  $("#Events").hide();
 	  $("#Movies").hide();
 	  $("#Amigos").hide();
-	  $("#letsGO").hide();
+	  $("#LetsGo").hide();
 	  $("#Start").hide();
 	  $("#Home").show();
 
@@ -76,7 +76,7 @@
 	  $("#Events").hide();
 	  $("#Home").hide();
 	  $("#Movies").hide();
-	  $("#letsGO").hide();
+	  $("#LetsGo").hide();
 	  $("#Start").hide();
 	  $("#Amigos").show();
       }
@@ -97,7 +97,7 @@
       function movies(){	  
 	  $("#Events").hide();
 	  $("#Amigos").hide();
-	  $("#letsGo").hide();
+	  $("#LetsGo").hide();
 	  $("#Home").hide();
 	  $("#Start").hide();
 
@@ -147,7 +147,7 @@
       function events(){
 	  $("#Movies").hide();
 	  $("#Amigos").hide();
-	  $("#letsGo").hide();
+	  $("#LetsGo").hide();
 	  $("#Home").hide();
 	  $("#Start").hide();
 	  
@@ -178,15 +178,46 @@
 
       
       function adios(){
+	  $("#Movies").hide();
+	  $("#Amigos").hide();
+	  $("#Events").hide();
+	  $("#LetsGo").hide();
 	  $("#Home").hide();
 	  $("#Start").show();
 
       }
 
       function letsGo(){
+	  $("#Start").hide();
+	  $("#Events").hide();
+	  $("#Movies").hide();
 	  $("#Home").hide();
-	  $("#Start").show();
-      }
+	  $("#LetsGo").show();
+	  secure_get_with_data("/secure_api/letsGo", {"username":$('#username').val()} , function(data){
+	      console.log("adding event to letsGo");
+	      
+	      console.log(data)
+
+	      
+	      table = document.getElementById("content-table4");
+	      
+              for(var i=0; i< Object.keys(data.data.events).length - 1; i++) {
+		  console.log(data.data.events[i]);
+		  row = table.insertRow(i+1);
+		  cell1 = row.insertCell(0);
+		  cell2 = row.insertCell(1);
+		  cell3 = row.insertCell(2);
+		  cell4 = row.insertCell(3);
+		  cell1.innerHTML = data.data.events[i].event;
+		  cell2.innerHTML = "";
+		  cell3.innerHTML = "";
+		  cell4.innerHTML = data.data.events[i].friend;
+              }
+              //$("#s").show();
+	  },
+			       function(err){ console.log(err) });
+      }   
+      
       
       </script>
 
@@ -364,8 +395,35 @@
       </div>
     </div>
 
-    
+    <!---------------------------------- LetsGo ------------------------------------->
 
-    
+    <div id="LetsGo" style="display: none;">
+      <div>
+	<button class="button top_right" onclick="adios();">Adios</button>
+      </div>
+
+      <div>
+	<button class="button top_left" onclick="home();">Home</button>
+      </div>
+
+
+      <div class="center4"  id="content-form4">
+	<div class="table_container">
+	  <table id="content-table4">
+	    <tbody>
+	      <tr>
+		<td>Event</td>
+		<td></td>
+		<td></td>
+		<td>Friend</td>	  
+	      </tr>
+	      <tr>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+    </div>
+        
   </body>
 </html>
