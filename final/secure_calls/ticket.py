@@ -16,7 +16,7 @@ def handle_request():
     now = date.today()
     til = timedelta(weeks=52)
     til = now + til
-    print(til)
+    print("searching for events from:"+str(now)+" until: "+str(til))
     
     key = os.environ.get('TIX_API')
 

@@ -1,9 +1,0 @@
-//js file
-
-function login(){
-    $("#Start").hide();
-}
-
-function signup(){
-    $("#Start").hide();
-}

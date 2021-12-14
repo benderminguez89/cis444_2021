@@ -13,12 +13,12 @@ def handle_request():
     #use data here to auth the user
 
     pw = request.form['password']
-    un = request.form['firstname']
+    un = request.form['username']
     
     password_from_user_form = request.form['password']
  
     user = {
-            "sub" : request.form['firstname'] #sub is used by pyJwt as the owner of the token
+            "sub" : request.form['username'] #sub is used by pyJwt as the owner of the token
             }
 
     cur = g.db.cursor()
