@@ -19,13 +19,15 @@ def handle_request():
     coming_soon = 'https://api.amctheatres.com/v2/movies/views/coming-soon'
     local = 'https://api.amctheatres.com/v2/theatres?state=california&city=sandiego'
     headers={'X-AMC-Vendor-Key': key}
+
     response = req.get(now_playing, headers)
     c_response = req.get(coming_soon, headers)
 
-    textResponse = response.text
-
-    data = json.loads(textResponse)
-    d = data["_embedded"]["movies"]
+    txt_response = response.text
+    c_txt_response = c_response.text
+    
+    data = json.loads(txt_response)
+    d = data['_embedded']['movies']
 
     movies = '{"now_playing":['
     print("\nNOW PLAYING:")
@@ -34,11 +36,10 @@ def handle_request():
         print(movie)
         movies += '{"title":"'+str(movie)+'"},'
     
-        movies += "]}"
+    movies += '{"end":"none"}]}'
 
-    txtResponse = c_response.text
-
-    c_data = json.loads(txtResponse)
+    
+    c_data = json.loads(c_txt_response)
     c_d = c_data["_embedded"]["movies"]
 
     coming_soon = '{"coming_soon":['
@@ -46,9 +47,10 @@ def handle_request():
     for b in c_d:
         c_movie = b.get("sortableName")
         print(c_movie)
-        coming_soon += '{"title":"'+str(movie)+'"},'
+        coming_soon += '{"title":"'+str(c_movie)+'"},'
     
-    coming_soon += "]}"
+    coming_soon += '{"end":"none"}]}'
+    
     print(movies, coming_soon)
-    return json_response(token = create_token( g.jwt_data ), data= json.loads(movies, coming_soon))
+    return json_response(token = create_token( g.jwt_data ), data= json.loads(movies, strict = False), data2= json.loads(coming_soon, strict = False))
     
