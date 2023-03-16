@@ -18,7 +18,7 @@ def handle_request():
     til = now + til
     print("searching for events from:"+str(now)+" until: "+str(til))
     
-    key = os.environ.get('TIX_API')
+    key = 'Scjv74PwIErH2jthOFDmmAZPE8f0OWGq'#os.environ.get('TIX_API')
 
 
     tm_client = ticketpy.ApiClient(key)

@@ -1,0 +1,41 @@
+from flask import request, g
+from flask_json import FlaskJSON, JsonError, json_response, as_json
+from tools.token_tools import create_token
+from psycopg2 import sql
+import json
+
+from tools.logging import logger
+
+
+def handle_request():
+    logger.debug("Friends")
+
+    un = request.args.get('username')
+    friend = request.args.get('f_username')
+    logger.debug(event)
+    logger.debug(request.args.get('username'))
+
+    cur = g.db.cursor()
+    cur.execute(sql.SQL("SELECT * FROM  friends WHERE f_name = %s AND username = %s;"),(friend, un))
+    info = cur.fetchone()
+    logger.debug(info)
+
+    '''
+    I need to implement:
+    
+    - check if a friend by f_name exists in any status
+    ----- if not allow request, add to db with pending status
+    - else(already exists) 
+    - is this a pending request by me
+    - subsequent check is this a pending request by them
+    - subsequent check
+    '''
+    if info is None:
+        cur.execute(sql.SQL("INSERT INTO friendss (username, f_name, status) VALUES(%s, %s);"),(event,un))
+
+        cur.close()
+        g.db.commit()
+        return "Added "+event+ " to your interests"
+
+
+    return "You're already interested in that!"

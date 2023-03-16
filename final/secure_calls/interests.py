@@ -9,7 +9,7 @@ from tools.logging import logger
 
 
 def handle_request():
-    logger.debug("Add to Cart Handle Request")
+    logger.debug("Add to Interests Request")
 
     un = request.args.get('username')
     event = request.args.get('title')

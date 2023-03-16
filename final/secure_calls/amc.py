@@ -13,7 +13,7 @@ from tools.logging import logger
 def handle_request():
     logger.debug("AMC API Handle Request")
 
-    key = os.environ.get('AMC_API')
+    key = '3C81C7F5-992D-4CCE-84B5-AA312D85739B'#os.environ.get('AMC_API')
 
     now_playing = 'https://api.amctheatres.com/v2/movies/views/now-playing'
     coming_soon = 'https://api.amctheatres.com/v2/movies/views/coming-soon'
